@@ -1138,9 +1138,8 @@
             recordChild = recordChild && !serializedNode.needBlock;
             delete serializedNode.needBlock;
             var shadowRoot = n.shadowRoot;
-            if (shadowRoot && isNativeShadowDom(shadowRoot)) {
+            if (shadowRoot && isNativeShadowDom(shadowRoot))
               serializedNode.isShadowHost = true;
-            }
           }
           if (
             (serializedNode.type === exports.NodeType.Document ||
