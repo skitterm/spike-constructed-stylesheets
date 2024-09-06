@@ -1139,12 +1139,6 @@
             delete serializedNode.needBlock;
             var shadowRoot = n.shadowRoot;
             if (shadowRoot && isNativeShadowDom(shadowRoot)) {
-              // ADD START
-              serializedNode.chromaticAdoptedStylesheets = [
-                shadowRoot.adoptedStyleSheets[0].cssRules[0].cssText,
-              ];
-              // ADD END
-
               serializedNode.isShadowHost = true;
             }
           }
