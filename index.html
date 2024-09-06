@@ -87,7 +87,7 @@
       // createShadowDOM();
       // createCustomElement();
 
-      // rrweb-snapshot, version 2.0.0-alpha.11
+      // rrweb-snapshot, version 2.0.0-alpha.11, with some changes (bookended by "Add start" and "Add end")
       // (https://www.npmjs.com/package/rrweb-snapshot/v/2.0.0-alpha.11?activeTab=code)
       var rrwebSnapshot = (function (exports) {
         "use strict";
@@ -1127,6 +1127,13 @@
             onSerialize(n);
           }
           var recordChild = !skipChild;
+          // ADD START
+          if (n.adoptedStyleSheets) {
+            serializedNode.chromaticAdoptedStylesheets =
+              n.adoptedStyleSheets.map((sheet) => sheet.cssRules);
+          }
+          // ADD END
+
           if (serializedNode.type === exports.NodeType.Element) {
             recordChild = recordChild && !serializedNode.needBlock;
             delete serializedNode.needBlock;
@@ -2155,7 +2162,6 @@
               }
               if (n.isShadowHost) {
                 if (!node_1.shadowRoot) {
-                  node_1.attachShadow({ mode: "open" });
                 } else {
                   while (node_1.shadowRoot.firstChild) {
                     node_1.shadowRoot.removeChild(node_1.shadowRoot.firstChild);
@@ -2196,6 +2202,17 @@
           if (!node) {
             return null;
           }
+          // ADD START
+          if (n.chromaticAdoptedStylesheets) {
+            const sheet = new CSSStyleSheet();
+
+            sheet.replaceSync(".non-shadow-non-custom-element { color: red; }");
+
+            doc.adoptedStyleSheets.push(sheet);
+            node.chromaticAdoptedStylesheets = n.chromaticAdoptedStylesheets;
+          }
+          // ADD END
+
           if (n.rootId && mirror.getNode(n.rootId) !== doc) {
             mirror.replace(n.rootId, doc);
           }
