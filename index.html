@@ -2173,14 +2173,6 @@
               }
               if (n.isShadowHost) {
                 if (!node_1.shadowRoot) {
-                  // ADD START
-                  const shadoww = node_1.attachShadow({ mode: "open" });
-                  // adoptedStylesheets.forEach() -- add the rules here...
-                  // try deserailzing the styles here
-                  const sheet = new CSSStyleSheet();
-                  sheet.replaceSync(n.chromaticAdoptedStylesheets[0]);
-                  shadoww.adoptedStyleSheets = [sheet];
-                  // ADD END
                 } else {
                   while (node_1.shadowRoot.firstChild) {
                     node_1.shadowRoot.removeChild(node_1.shadowRoot.firstChild);
@@ -2293,10 +2285,7 @@
                 if (body_1) {
                   htmlElement.removeChild(body_1);
                   node.appendChild(childNode);
-                  // this line doesn't work, for some reason
-                  console.log("body", body_1);
                   htmlElement.appendChild(body_1);
-                  console.log("Yah");
                 } else {
                   node.appendChild(childNode);
                 }
